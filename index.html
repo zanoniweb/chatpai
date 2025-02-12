@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat com Pai - IA Infantil</title>
+    
+    <style>
+
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #f0f8ff; 
+}
+.chat-container { 
+    max-width: 600px; /* Aumentando a largura */
+    width: 90%; /* Para maior responsividade */
+    margin: 0 auto; 
+    background: #fff; 
+    border: 1px solid #ddd; 
+    border-radius: 10px; 
+    padding: 15px; 
+}
+.messages { 
+    max-height: 400px; /* Aumentando a altura */
+    overflow-y: auto; 
+    margin-bottom: 10px; 
+}
+.message { 
+    margin: 5px 0; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
+.user-message { 
+    background-color: #d3f8d3; 
+    text-align: left; 
+}
+.bot-message { 
+    background-color: #f8d3d3; 
+    text-align: right; 
+}
+input[type="text"] { 
+    width: 85%; /* Ajustando para caber melhor */
+    padding: 10px; 
+    margin-top: 10px; 
+    border-radius: 5px; 
+}
+
+.chat-button {
+    width: auto; /* Permite que o botão ajuste sua largura conforme o conteúdo */
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Início do código do botão de orientação */
+.manual {
+    position: fixed;
+    top: 0;
+    right: -350px; /* Escondido fora da tela */
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    transition: right 0.3s ease-in-out;
+}
+
+.manual h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.manual ul {
+    padding-left: 20px;
+}
+
+.manual ul li {
+    margin-bottom: 10px;
+}
+
+.manual.ativo {
+    right: 0; /* Aparece na tela */ 
+} /* Final do código do botão de orientação */
+
+    </style>
+
+</head>
+<body>
+
+
+    <center>
+        <h1><i><b>PAI - IA Infantil</b></i></h1>
+        <h1><i><b>CHAT FAMILIAR PERSOANLIZADO PARA: ANABELA.</b></i></h1>
+    </center>
+
+<!--INICIO DO CAMPO DE PESQUISA E BOTÕES-->
+
+<div class="chat-container">
+    <div class="messages" id="messages"></div>
+    <input type="text" id="userInput" placeholder="Digite sua pergunta...">
+    <button class="chat-button" onclick="sendMessage()">Enviar</button>
+    <button class="chat-button" onclick="clearChat()">Limpar</button>
+    <button class="chat-button" id="btnOrientacoes">Orientações Chat</button>
+</div>
+
+<!--FINAL DO CAMPO DE PESQUISA E BOTÕES-->
+
+<!--INICIO DO CÓDIGO DO BOTÃO DE ORIENTAÇÕES-->
+
+<div id="manual" class="manual">
+    <button class="chat-button" id="btnFechar">✖</button>
+    <h2>Micro Manual de Orientações</h2>
+    <ul>
+        <li>✔ Passo 1: Esse chat destina-se a orientações familiares sem a interferência externa.</li>
+        <li>✔ Passo 2: Faça pesquisa por palavra chave, por palavra chave, por exemplo: zanoni, papai etc.</li>
+        <li>✔ Passo 3: Este espaço está disponível 24 horas para as suas consultas.</li>
+    </ul>
+</div>
+
+<!--FINAL DO CÓDIGO DO BOTÃO DE ORIENTAÇÕES-->
+
+
+    <center>
+        <footer>
+            <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+        </footer>
+    </center>
+
+    <script>
+
+const botName = "Pai"; // INICIO DO CÓDIGO DO CHAT
+
+function addMessage(text, isBot = false) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message', isBot ? 'bot-message' : 'user-message');
+    messageElement.textContent = text;
+    document.getElementById('messages').appendChild(messageElement);
+    document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+}
+
+function sendMessage() {
+    const userMessage = document.getElementById('userInput').value.trim().toLowerCase();
+    if (userMessage === "") return;
+
+    addMessage(userMessage, false);
+    document.getElementById('userInput').value = "";
+
+    setTimeout(() => {
+        const botResponse = getBotResponse(userMessage);
+        addMessage(botResponse, true);
+    }, 1000);
+}
+
+// Normaliza a entrada para minúsculas
+
+function getBotResponse(input) {
+    const responses = [
+
+// INICIO DO CÓDIGO DAS RESPOSTAS DE TRATAMENTO
+
+            { keywords: ["oi"], response: "Oi! Como posso te ajudar?" },
+          
+            { keywords: ["bom dia"], response: "Bom dia, minha linha belinha" },
+            
+            { keywords: ["boa tarde"], response: "Boa tarde, minha linha belinha" },
+
+            { keywords: ["boa noite"], response: "Boa noite, minha linha belinha" },
+
+            { keywords: ["como você está"], response: "Estou bem, obrigado! E você?" },
+
+            { keywords: ["alegre", "contente", "bem", "feliz"], response: "Que bom saber minha princesinha a sua felicidade me deixam muito feliz em saber que você está bem." },
+            
+            { keywords: ["aborrecida", "chateada", "emotiva", "triste"], response: "Puxa princesa temos que superar isso agora mesmo deixe com o PAI. Vou lhe dar dicas: assista um filme que você goste, escute uma música que vai te animar, abrace alguém de sua família e bola para frente minha princesa, pois você é maravilhosa e nada pode te abalar. Lembre-se como seu papai sempre falou para ti aquela frase motivadora fica na sombra da minha beleza." },
+
+            { keywords: ["ajuda", "socorro", "dúvida", "help" ], response: "Posso te ajudar em alguma dúvida? Responda sim ou não. Responda sim ou não e receba mais orientações." },
+            
+            { keywords: ["sim"], response: "Puxa legal saiba que estou aqui para isso, pois o PAI inteligência artificial destinada a prestão informações especificamente para Anabela Aparecida Silvestre Zanoni. Um modelo de IA estática criada por Juliano Zanoni para atender as demandas de sua princesinha. Bem apenas vou lhe informar que as suas buscas nesse campo de pesquisa devem ocorrer por palavras chaves em letras minusculas e respeitando os acentos das palavras." },
+
+            { keywords: ["não"], response: "Tudo bem! Quando precisar, estarei aqui para você, minha querida!" },
+
+            { keywords: ["beijos"], response: "Boa noite minha doce princesa sempre que precisar eu estarei por aqui ok, no que precisar me mande palavras chaves e dentro de minhas possibilidades o PAI irá te socorrer." },
+
+// FINAL DO CÓDIGO DAS RESPOSTAS DE TRATAMENTO
+
+// INICIO DO CÓDIGO ANABELA
+
+            { keywords: ["anabela"], response: "Seu nome foi escolhido pelo papai porque ele queria Isabel, mas a mamãe pediu outro nome. Então, escolhi Anabela, que rima com Bela, e te chamo de Beilinha!" },
+           
+            { keywords: ["apelido"], response: "Seu primeiro apelido foi Viguinho, porque quando bebê, você se levantava no berço e dizia: 'Viguinho!', levantando as mãos para eu te pegar." },       
+    
+            { keywords: ["bale", "natação"], response: "Minha belinha do coração eu sei que o bale ajuda a pose e já a natação sei que ajuda na atividade respiratória e desenvolvimento, ou seja, no seu cresimento e desenvolvimento parabéns assim minha doce princesinha praticando muitos esportes. Se desejar descobrir os esporte que o seu pai praticou ou gosta pequisa por esportista." },
+    
+// FINAL DO CÓDIGO ANABELA
+
+// INICIO DO CÓDIGO ANTEPASSADOS
+
+            { keywords: ["zanoni"], response: "Históricamente o sobrenome Zanoni começa a ser ouvido na Itália por volta do século XI d. C.. Contudo observa-se que os sobrenomes Zanone, Zanoni e Zaniol por questão dialética eram todos chamados como Zanoni. Os antepassados paternos vêm de Viadana, na Itália. O tataravô veio para o Brasil em 1887, passou por Itú-SP, depois Paraná, e a família se estabeleceu em Londrina-PR. Um grande mistério é nome do vapor (ou seja, a embarcação movida a carvão que demorou aproximadamente 60 dias para chegar ao Brasil) que trouxe os eus antepassados italianos ao Brasil, pois quando eles sairam do porto de Genôva o capitão da embarcação não registro o nome da embarcação conjuntamente com a lista de passageiros da época e quando chegaram no porto do Rio de Janeiro no porto do da capital do império também ocorreu a mesma falha de não registarem o nome da embarcação." },
+           
+            { keywords: ["avô", "antonio celso zanoni"], response: "O seu avô Antônio Celso Zanoni nasceu na região de Rancharia em 11/01/1940 antiga localidade que faz parte da cidade de Iepê/Sp, aos 8 anos de idade ele veio com pai dele para trabalhar em fazendas no intierior do norte do Paraná. É de conhecimento notório da família que da região rural ele foi para a cidade de Porecatu/Pr para morar na casa de seu tio Angelo Zanoni e nessa cidade ele começou a trabalhar em escritório de contabilidade, na usina de cana no setor de admnistrativo e mais tarde como bancário tendo ficado na cidade de Porecatu/Pr até aproxidamente o final dos anos 60. Já ainda nos anos 60 ele trabalhou na gerência das Casas Blanc que era uma loja de rede de renome aqui no norte do estado do Paraná na cidade de Londrina/Pr. Contudo ao passar do tempo a empresa Casas Blanc quebrou e na senquência ecnerrou as suas atividades comerciais. Com isso nos 70 o Sr. Antônio Celso Zanoni foi adminitdo na ACIL (Associação Comercial e Industrial de Londrina/Pr), na qual ele atuo exercendo inúmeros cargos de gerencia por mais de 33 anos de serviços prestados. É de conhecimento notório que ele faleceu em Londrina/Pr em ??/??/?? com 76 anos." },
+            
+// FINAL DO CÓDIGO ANTEPASSADOS   
+
+// INICIO DO CÓDIGO JULIANO
+    
+            { keywords: ["juliano", "papai",], response: "Seu pai Juliano Zanoni nasceu em Londrina em 18/07/1977 no hospital denominado Santa Casa. Prestei serviço militar obrigatório em 1996 e ao todo foram 10 meeses dando baixa como reservista de 2ª categoria e honras militares. Profissionalmente o seu pai trabalhou como: bolsita da EMBRATUR/Pr entre os anos 2000 e 2001 atudando no Departamento de Empreendimentos Turísticos, na Universidade Norte do Paraná/Pr - Unopar como tutor eletrônico do curso superior em Tecnologia em Turismo entre 2004 e 2006; entre 2007 a 2012 trabalhou como Técnico em Química Industrial na empresa Labosolo do Brasil, na qual realizava ensaios químicos para ensaios ambientais e agropecuários; Desde 08/05/2012 trabalha na área da gestão pública como servidor público municipal na Prefeitura Municipal de Cambé/Pr e tem uma paixão por história. Se quiser saber mais detalhes, me pergunte pela palavra-chave: 'gosto por história'." },
+    
+            { keywords: ["cinema pai"], response: "O seu pai sempre gostou de cinema desde pequenino, mas sempre tive preferências por filmes de: filmes de ação, filmes de guerra, filmes de faroeste, ficção científica, filmes épicos (ou seja, filmes históricos)." },
+            
+            { keywords: ["hobbys pai", "passatempos pai"], response: "Eu coleciono selos desde 1985 e moedas desde 1998. Essas coleções são herança para você e envolvem história e cultura!" },
+    
+            { keywords: ["gosto por história"], response: "Desde de muito pqueno sempre gostai de escutar histórias, visitar lugares históricos estudar fatos históricos de povos do passado o assunto sempre me encantou." },
+    
+            { keywords: ["acadêmico"], response: "O seu papai tem formações técnicas: técnico em química industrial e técnico em segurança do trabalho; graduado em: Turismo e Hotelaria, Licenciado em História e discente em Engenharia de Software; especialista em Cultura Africana, Docência e Ensino de História, Educação Multicultural, Gestão Ambiental e Gestão Pública; mestrado não acadêmico em: Teologia." },
+
+            { keywords: ["esportista"], response: "O seu sempre gostou de praticar a pescaria que é um esporte, caminhar, pedalar, na minha juventude joguei xadrez, jogeui muita sinuca e também gostava de tiro esportivo." },
+
+            { keywords: ["gosto alimentar pai"], response: "O seu papai come muitas comidas variadas que são crucuais para a nossa saúde, mas gosto de alguns pratos específicos as vezes, como: comida chinesa, capelete, lasanha e um tal franguinho indiano que a sua vovó não cozinha mais, pois após o falecimento de seu avô ela decidu não cozinhar mais para visitas?" },
+
+            { keywords: ["religião pai"], response: "O seu papai acredita a muitos anos no esperitismo que para alguns é uma ciência e para outros é forma diferenciada de religião, ou seja, papai está mais focado na área científica dessa temática e não na área religiosa, contudo, antes que me pergunte o seu papai não é ateu, ou seja, eu acredito que exista um Deus sim minha doce princesinha." },
+
+// FINAL DO CÓDIGO JULIANO 
+
+// INICIO DO CÓDIGO VALQUIRIA
+            
+            { keywords: ["acadêmica"], response: "A sua mamãe tem formação inicial em magistério, graduação em pedagogia e também é especialista em psicopedagogia." },
+
+            { keywords: ["religião mãe"], response: "A sua mãe é cristã, ou seja, acredita em Deus nosso senhor é devota de nossa Senhora Aparecida a famosa padroeira do Brasil." },
+
+            { keywords: ["comidas preferidas da mamãe"], response: "A sua mamãe gosta muito de churrasco e de sobremesa um ferrero se uma ótima escolha para dar para ela e com certeza ela vai amar." },
+
+// FINAL DO CÓDIGO VALQUIRIA
+    
+// INICIO DO CÓDIGO CULTURA
+            
+            { keywords: ["barbaros"], response: "A expressão bárbaros surgiu na Roma Antiga, na qual a população chamava os povos externos que não faziam parte do império de povos bárbaros, pois não falavam o mesmo idioma linguístico nem adoravam os mesmos deuses, mas em suma eram povos que tinham as suas próprias culturas. " },
+
+            { keywords: ["cultura"], response: "Cultura é uma composição de vários elementos como por exemplo o idioma que as pessoas falam em um país, as músicas que escutam, as peças de teatro, os shows, os artesanatos, a religião, os pratos típicos, as lendas, os folclores etc. " },
+            
+            { keywords: ["educação"], response: "Estudar sempre é importante! O conhecimento abre portas para um futuro brilhante." },
+
+            { keywords: ["formação"], response: "Para saber da formação do seu pai pergunte por: acadêmico ou para saber as formações de sua mãe pergunte acadêmica." },
+
+            { keywords: ["hobbys", "passatempos"], response: "Geralmente são coisas que fazemos em nossas horas de lazer e muitas vezes são atividades culturais que nos fazem muito bem" },
+
+            { keywords: ["religião"], response: "A temática religião é muito ampla, pois existem várias por um questão muito prática, ou seja, no planeta Terra existem muitos povos com línguas e questões culturais diferenciadas. E nesse contexto por exemplo existem algumas religiões africanas que originais do continente africano, o judaísmo que é do povo judeu, o cristianismo que abrangem as pessoas que frequentam a igreja católica, o islamismo que abrange algumas pessoas dos países islâmicos, os evangélicos que fazem os seus cultos no tocante a essa temática, os budistas que geralmente ocorre muito nos países asiáticos, o espiritismo que pode envolver pessoas de vários estudiosos de vários continentes. O importante minha doce belinha é sempre respeitar a religiosidade de cada pessoa, pis trata-se de uma questão cultural." },
+
+// FINAL DO CÓDIGO CULTURA            
+    
+// INICIO DO CÓDIGO SAÚDE
+
+            { keywords: ["alimentação"], response: "Uma alimentação saudável envolve frutas, legumes e proteínas. Você tem alguma dúvida sobre isso? Se desejar saber o que o seu pai gosta de comer faça uma pesquisa no apui por: gosto alimentar pai" },
+            
+            { keywords: ["esporte"], response: "Esportes ajudam na saúde e ajudam no desenvolvimento do corpo além de prever uma série de doenças. Qual esporte você gosta?" },
+
+            { keywords: ["saúde"], response: "Cuidar da saúde é essencial tanto para humanos como animais! Uma boa alimentação, exercícios e check-ups médicos são fundamentais." },
+
+// FINAL DO CÓDIGO SAÚDE
+    
+
+// INICIO DO CÓDIGO HISTÓRIA
+
+            { keywords: ["brasil", "colonização"], response: "Historicamente o Brasil foi descoberto por Pedro Alvares Cabral em 1500 d. C. que comandava a expedição Portuguesa, como é narrado por Pero Vaz de Caminha que fez a narrativa da descoberta para o Rei de Portugal na época. Contudo, as duas primeiras expedições lusitanas de colonização foram repelidas pelas tribos nativas, mas a terceira expedição de 1530 teve êxito e daí começa o início da colonização." },
+
+// FINAL DO CÓDIGO HISTÓRIA
+
+
+// INICIO DO CÓDIGO GEOGRAFIA
+
+            { keywords: ["areia"], response: "São pequenos grãos, ou seja, a partir de varia entre 0,05 mm e 2 mm e dependendo da sua dimensão pode ficar classificada entre areia fina, areia média e areia grossa." },
+
+            { keywords: ["cavernas"], response: "São estrutura rochosas que estão no subsolo as vezes preenchidas com água ou as vezes não. As vezes apresentam aberturas na superfície verticais ou horizontais e alguns vão de metros de comprimento até quilômetros de distância. No Brasil algumas das mais famosas estão no Parque Estadual Alto Da Ribeira o famoso petar localizado no estado no estado de São Paulo, no estado Paraná existe furnas que está próximo da cidade de Ponta Grossa/Pr. As cavernas as vezes apresentam faunas especificas que podem conter como: aranhas, cobras, morcegos, lagartos e outros aracnídeos. " },
+        
+            { keywords: ["chuva"], response: "Nada mais é do que a precipitação da água que está condessada nas nuvens." },
+            
+            { keywords: ["iceberg"], response: "São grandes estruturas de gelo que se desprendem dos polos e ficam a deriva em alto mar. Curiosidade o gelo flutua, pois as moléculas congeladas do oxigênio apresentam menor densidade que as moléculas de hidrogênio." },
+
+            { keywords: ["senso"], response: "É uma pesquisa que envolve toda a população de um país." },
+
+            { keywords: ["solo"], response: "A sua origem está ligada diretamente a decomposição de rochas, ou seja, os pequenos fragmentos das rochas vão se acumulando na superfície terrestre" },
+  
+            { keywords: ["nascente"], response: "É um ponto na superfície na qual mina água do subsolo. Na maioria dos casos essas minas desaguam em pequenos córregos que deságuam em rios e na sequência uma parte dessa água potável acaba chegando nos oceanos. Contudo a criação da mesma dependia de um ato do proprietário para fazer essa criação da reserva e o único do benefício que ele teria direito seria apenas a isenção do Imposto Territorial Rural, o famoso ITR, contudo, quando a cidade chegar a proximidade da reserva e ela se tornar urbana ela começa a ser tributada pelo IPTU, ou seja, o Imposto Predial e Territorial Urbano." },
+
+            { keywords: ["vulcão"], response: "É um forma de erupção que ocorre quando o magma aquecido é expelido em forma de jarros por abertura na superfície como se fossem pequenas explosões muitas vezes são arremessadas pedras e também são liberados gases tóxicos. Historicamente na Itália, a antiga cidade de Pompéia foi atingida erupção do vulcão denominado Vesuvio e algumas pessoas foram petrificadas, pois não conseguiram fugir a tempo e acabaram sendo atingias pelo magma e algumas provavelmente foram atingidas por gases tóxicos. O arquipélago do Havaí que nada mais do que um conjunto de ilhas vem sendo criado por atividade vulcânica abaixo do oceano a cada ciclo de séculos surge uma nova ilha de origem vulcânica." },
+
+// FINAL DO CÓDIGO GEOGRAFIA
+
+// INICIO DO CÓDIGO MEIO AMBIENTE
+
+            { keywords: ["água"], response: "Ela se apresenta em estado líquido e é composta por uma molécula de hidrogênio e duas moléculas de oxigênio e por tal motivo falamos que a sua formula é H2O. A água que animais, planas e humanos consomem é a água doce já água salgada dos oceanos serve apenas para os ecossistemas aquáticos que ali existem, mas já na atualidade existem países do oriente médio fazem um processo industrial para extrair o sal e poder aproveitar para irrigação de plantações ou outros processos que não evolvam diretamente o consumo dos seres humanos. É de conhecimento notóro que 97 % da água de todo o mundo é salgada e que apenas apenas 3 % é de água doce e que a maoria dessa água está no subsolo, ou seja, no subterâneo." },
+
+            { keywords: ["cadeia alimentar "], response: "É um ciclo que caminha do vegetal até quem está no topo da cadeia alimentar. Por exemplo: a alface está na horta e a lagarta começa a comer a alface, na sequência vem uma pombinha ela come a lagarta e passado uns minutinhos uma onça come a pombinha que havia acabado de comer a lagarta. Quem está no topo da cadeia alimentar nessa questão é a onça." }, 
+            
+            { keywords: ["camada de ozônio"], response: "É uma camada que envolve a terra na superfície da atmosfera que protege a superfície da terra contra o impacto dos raios solares denominados ultravioletas, ou seja, não vistos pelo olho humano, mas são muito letais, ou seja, muita exposição com o passar dos anos levar a casos de câncer de pele. " },
+
+            { keywords: ["carnívoros"], response: "São animais que se aliemntam da carne de outros animais que eles abatem geralmente. Exemplos desses animais: leões, onças, tigres, pumas, raposas, jiboias etc." },
+            
+            { keywords: ["cultivo"], response: "É o sistema de como os humanos relatam que tal pessoa está plantando: arroz, banana, cebolinha, espinafre, manga ou outro alimento." },
+            
+            { keywords: ["bioma"], response: "É um conjunto de ecossistemas e cabe lembrar que um ecossistema é composto por fauna que são os animais que vivem naquele espaço geográfico e a flora é composta da vegetação nativa que ocupa o mesmo espaço." },
+
+            { keywords: ["invertebrados"], response: "Seres invertebrados são todos os seres que não possuem ossos" },
+            
+            { keywords: ["fauna"], response: "É composta por fauna que são os animais que vivem naquele espaço geográfico " },
+
+            { keywords: ["flora"], response: "É composta da vegetação nativa que ocupa determinada área de proteção ambiental. " },
+
+            { keywords: ["herbivoros"], response: "São animais que se aliemntam de plantas, ou seja, folhas, flores e frutos. Exemplos desses animais: vacas, cavalos, cabras, ovelhas etc." },
+
+            { keywords: ["peixes"], response: "São animais vertebrados que habitam tanto lugares de água doce como também existem peixes em localidades que apresentam água salgada. Os peixes também apresentam entre eles alguns exemplares de peixes carnívoros como, por exemplo: dourado, piranha e traíra que são alguns exemplares de peixes carnívoros de água doce; contudo, também existem exemplares de peixes carnívoros de água salgada como por exemplo: o robalo e o peixe espada. Faço a ressalva que aqui foram apresentados apenas alguns exemplares para ilustrar o tema." },
+
+            { keywords: ["peçonha", "peçonhentos"], response: "Peçonhentos é o nome genérico dado a animais peçonhentos como, por exemplo:  aranhas, cobras e escorpiões. Pois a peçonha é o veneno e quando um desses animais morde o ser humano, o mesmo deve procurar cuidados médicos com urgência, pois caso contrário ele corre risco de vida." },
+ 
+            { keywords: ["planta", "planta"], response: "Geralmente é originária de uma semente ou algum broto e a sua composição é formada por: raízes, caule, folhas, flores que dependendo da espécie pode gerar frutos ou sementes." },
+ 
+            { keywords: ["predadores"], response: "São animais carnívoros que costumam outros aninais dede sua fauna para se alimentar. Por exemplo o leão no continente africano costuma caçar a zebra ou bisão para se alimentar. A onça pintada no Brasil as vezes caça a capivara no Pantanal para se alimentar ou outro animal ou a sucuri que também habita o Pantanal caça pequeno novilhos para se alimentar. O tubarão em alto mar pode comer uma tartaruga marinha ou um pequeno filhote de baleia. Em suma aqui foram apresentados exemplos de animais predadores." },
+ 
+            { keywords: ["primatas"], response: "É o termo científico para falar de uma forma genérica macacos, contudo, existem várias espécies de macacos como, por exemplo: bugios, chipanzés, gorilas, orangotangos, macacos pregos, micos leões, micos leões dourados etc. " },
+            
+            { keywords: ["mamíferos"], response: "São os animais que ao nascer se aliemntam do leite de suas mães e esses animais podem ser racionais ou irracionais. Exemplos de animais irracionais que se enquadram como mamíferos são: baleia, cachorro, capivara, cavalo, elefante, gato doméstico, gamba, porco, tatu, tamanduá, vaca etc. Exemplos de animais racionais que se enquadram como mamíferos temos os humanos que desenvolvem raciocínios lógicos e por que motivo são denominados de animais racionais." },
+ 
+            { keywords: ["mata ciliar"], response: "É uma pequena área dentro das propriedades rurais na qual ainda apresenta uma pequena porção de mata nativa que não pode ser desmatada. A sua função é preservar o meio ambiente o que consiste em criar um ambiente para a fauna, ou seja, os pequenos animais que habitam a região e garantam a sobrevivência de exemplares da flora, ou seja, de plantas nativas." },
+ 
+            { keywords: ["mel"], response: "É gerado pelas abelhas que são pequenos insetos e vivem em uma colmeia comandado por uma rainha, ou seja, existem abelhas que coletam o polem de várias flores e levam para a colmeia das abelhas lá existem abelhas operárias que trabalham para transformar o polem em mel. Observo que o mel é um rico alimento que também é empregado pela indústria farmacêutica na manipulação de medicamentos." },
+
+            {keywords: ["rppn", "reserva de patrimônio particular natural"], response: "As Reservas de Patrimônio Particular natural foram criadas com finalidade de preservação do patrimônio natural. Contudo ficando sobre a guarda, ou seja, de propriedade de uma pessoa privada sendo ela física ou jurídica." },
+            
+            { keywords: ["vertebrados"], response: "Seres vertebrados são todos os seres que possuem ossos." },
+
+// FINAL DO CÓDIGO MEIO AMBIENTE
+
+// INICIO DO CÓDIGO DE QUÍMICA
+
+            { keywords: ["etanol"], response: "É produzido pelo processo de destilação da cana de açúcar.  Contudo observo que outro produto que obtido da cana de açúcar é o próprio açúcar." },
+
+            { keywords: ["gasolina"], response: "É um produto obtido após o refino do petróleo que é extraído do subsolo. Exemplos de outros produtos extraídos do petróleo são: o ácido sulfúrico, o isopor, e a soda caustica. " },
+    
+            { keywords: ["tinta"], response: "É um produto químico feito por elementos minerais que fornecem a pigmentação e para a sua diluição e formulação são utilizados solventes." },
+
+// FINAL DO CÓDIGO DE QUÍMICA
+
+
+// INICIO DO CÓDIGO ECONOMIA
+
+// FINAL DO CÓDIGO ECONOMIA
+
+            
+    ];
+ 
+
+        // Melhorando a busca de palavras-chave
+        for (let item of responses) {
+            for (let keyword of item.keywords) {
+                if (input.includes(keyword)) {
+                    return item.response;
+                }
+            }
+        }
+
+        return "Desculpe, eu não entendi. Pode perguntar outra coisa? Mas pergunte por palavras chaves.";
+    } // FINAL DO CÓDIGO DO CHAT
+
+     // CODIGO PARA LIMPAR CHAT
+    function clearChat() {
+        document.getElementById('messages').innerHTML = "";
+    }
+
+    // CODIGO REFERENTE A FUNCIONALIDADE DO BOTÃO DE ORIENTAÇÃO
+    document.getElementById("btnOrientacoes").addEventListener("click", function () {
+    document.getElementById("manual").classList.add("ativo");
+});
+
+document.getElementById("btnFechar").addEventListener("click", function () {
+    document.getElementById("manual").classList.remove("ativo");
+});
+
+
+
+    </script>
+
+</body>
+
+</html>
